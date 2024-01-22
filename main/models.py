@@ -5,12 +5,18 @@ from accounts.models import User
 class Category(models.Model):
     title = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.title
+
 
 class VideoContent(models.Model):
     author = models.ForeignKey(User, related_name='videos', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, related_name='videos', on_delete=models.PROTECT)
     title = models.CharField(max_length=255)
     file = models.FileField(upload_to="videos", blank=True)
+
+    image = models.ImageField(upload_to="images", blank=True)
+
     video_url = models.URLField(max_length=255, blank=True)
     text = models.TextField(max_length=500)
     likes = models.PositiveBigIntegerField(default=0)
